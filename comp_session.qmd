@@ -86,6 +86,12 @@ part_1_1 <- penguins |>
   select(-"year", -"sex") |> 
   mutate(body_mass_kg = body_mass_g / 1000) |> 
   rename(location = island)
+
+part_1_2 <- penguins |> 
+  filter(species == "Adelie") |> 
+  filter(!is.na(flipper_length_mm)) |> 
+  group_by(sex) |> 
+  summarize(mean_flipper_length = mean(flipper_length_mm), sd_flipper_length = sd(flipper_length_mm), sample_size = n())
 ```
 
 Afternoon computational session
@@ -172,5 +178,68 @@ day_2 <- ymd("2020-05-18")
 
 time_interval <- interval(day_1, day_2)
 time_length(time_interval, "month")
+```
+
+## String Work 
+### `str_detect`
+
+```{r}
+my_string <- "Thistle love treats, the beach, and naptime."
+
+my_string |> 
+  str_detect("love")
+
+my_other_string <- c("treats", "burrito", "fish taco", "taco salad")
+
+my_other_string |> 
+  str_detect("fish")
+
+```
+
+```{r}
+#Pull out all of the character that have skywalker in their name
+
+skywalkers <- starwars |> 
+  filter(str_detect(name, pattern = "Skywalker"))
+
+maul <- starwars |> 
+  filter(str_detect(name, pattern = "Maul"))
+
+blue_eyes <- starwars |> 
+  filter(str_detect(eye_color, pattern = "blue"))
+```
+
+```{r}
+feedback <- c("  I  ate    some  nachos", "Wednesday   morning ")
+
+str_trim(feedback)
+str_squish(feedback)
+
+#str_to*
+
+str_to_lower(feedback)
+str_to_upper(feedback)
+str_to_title(feedback)
+
+starwars_lc <- starwars |> 
+  mutate(name_lower = str_to_lower(name))
+```
+
+### `case_when()`
+
+```{r}
+starwars_robot <- starwars |> 
+  mutate(rabot_status = case_when(
+    species == "Droid" ~ "A ROBOT",
+    species == "Human" ~ "Its a human", 
+    TRUE ~ "This is something else"
+  ))
+```
+
+
+## string replace to replace string patterns 
+```{r}
+sky_to_fire <- starwars |> 
+  mutate(new_name = str_replace(name, pattern = "Sky", replacement = "Fire"))
 ```
 
