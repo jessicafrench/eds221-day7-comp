@@ -1,0 +1,17 @@
+---
+title: "Joins and Strings and Dates, oh my!"
+format: html
+editor: visual
+---
+
+## Joins 
+
+### full join
+
+### left join
+
+### inner join
+
+### semi join
+
+### anti join
