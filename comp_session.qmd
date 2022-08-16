@@ -8,10 +8,10 @@ editor: visual
 library(tidyverse)
 library(palmerpenguins)
 library(lubridate)
+
 ```
 
-
-## Joins 
+## Joins
 
 ```{r}
 animals <- tibble::tribble(
@@ -33,7 +33,6 @@ sites <- tibble::tribble(
 
 ```
 
-
 ### full join
 
 ```{r}
@@ -47,6 +46,7 @@ left_join_ex <- left_join(animals, sites)
 ```
 
 ### inner join
+
 ```{r}
 inner_join_ex <- inner_join(animals, sites, by = "location")
 ```
@@ -56,13 +56,15 @@ sites_2 <- sites |>
   rename(loc = location)
 ```
 
-examples of when key variable names do not match 
+examples of when key variable names do not match
+
 ```{r}
 nonmatching_full <- full_join(animals, sites_2, by = c("location" = "loc"))
 ```
 
-## All of the above are mutating joins. 
-- below are the filtering joins
+## All of the above are mutating joins.
+
+-   below are the filtering joins
 
 ### semi join
 
@@ -71,6 +73,7 @@ semi_join_ex <- semi_join(animals, sites)
 ```
 
 ### anti join
+
 ```{r}
 anti_join_ex <- anti_join(animals, sites)
 ```
@@ -85,7 +88,63 @@ part_1_1 <- penguins |>
   rename(location = island)
 ```
 
-```{r}
+Afternoon computational session
+- dates and times with `lubridate`
 
+```{r}
+my_date <- "03-15-1998" #r does not recognize this as a date
+
+lubridate::mdy(my_date)
+
+my_date <- "11/7/2003"
+lubridate::dmy(my_date)
+
+my_date <- "08-jun-1974"
+lubridate::dmy(my_date)
+
+my_date <- "19610518"
+lubridate::ymd(my_date)
+
+#tidyverts for time series analysis
+
+```
+```{r}
+#ways to break, if the date given does not match the function chosen
+
+lubridate::ymd("1942-08-30")
+
+
+```
+
+```{r}
+time <- "2020-08-12 11:18"
+time <- lubridate::ymd_hm(time)
+time
+class(time)
+```
+
+```{r}
+#convert time zones using lubridate
+
+with_tz(time, "America/Los_Angeles")
+with_tz(time, "Poland")
+with_tz(time, "Pacific/Palau")
+
+#Pulling the different pieces (parsing) time data
+my_time <- ymd_hms(time)
+
+year(my_time)
+day(my_time)
+```
+
+```{r}
+thistle_bday <- ymd(20171208)
+thistle_bday
+
+wday(thistle_bday, label = TRUE)
+week(thistle_bday)
+
+my_bday <- mdy(02061991)
+wday(my_bday, label = TRUE)
 ```
 
